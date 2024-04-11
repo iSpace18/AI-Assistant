@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Assistant Website</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #1e1e1e;
+    color: #d4d4d4;
+  }
+  .header {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 0;
+    text-align: center;
+  }
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  .input-area {
+    margin-bottom: 20px;
+  }
+  .input-area input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #2a2a2a;
+    color: #d4d4d4;
+  }
+  .input-area button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #4d9e4d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .input-area button:hover {
+    background-color: #378c37;
+  }
+  .response-area {
+    background-color: #2a2a2a;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative;
+  }
+  .response-area .question {
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  .response-area .answer {
+    margin-bottom: 20px;
+  }
+  pre {
+    background-color: #333;
+    color: #d4d4d4;
+    padding: 10px;
+    border-radius: 5px;
+    overflow-x: auto;
+  }
+  .copy-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 5px 10px;
+    font-size: 14px;
+    background-color: #4d9e4d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .tag-meta {
+    color: #4ec9b0;
+  }
+  .tag-html {
+    color: #569cd6;
+  }
+  .function {
+    color: #c586c0;
+  }
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>AI Assistant</h1>
+</div>
+<div class="container">
+  <div class="input-area">
+    <input type="text" id="userInput" placeholder="Type your question here...">
+    <button onclick="getResponse()">Ask</button>
+    <button onclick="clearResponses()">Clear</button>
+  </div>
+  <div class="response-area" id="aiResponse">
+  </div>
+</div>
+<script>
+  function getResponse() {
+    let userInput = document.getElementById('userInput').value;
+    if (userInput.trim() !== '') {
+      let responseArea = document.getElementById('aiResponse');
+      let questionDiv = document.createElement('div');
+      questionDiv.className = 'question';
+      questionDiv.textContent = "You asked: " + userInput;
+      let answerDiv = document.createElement('div');
+      answerDiv.className = 'answer';
+
+      if (userInput.includes('!')) {
+        answerDiv.innerHTML = `<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0&gt;
+  &lt;title&gt;Document&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>`;
+      } else if (userInput.toLowerCase().includes('function')) {
+        answerDiv.innerHTML = `<pre><code>function greet() {
+  return 'Hello!';
+}
+
+console.log(greet());
+</code></pre>`;
+      } else if (userInput.toLowerCase().includes('array')) {
+        answerDiv.innerHTML = `<pre><code>let numbers = [1, 2, 3, 4, 5];
+
+console.log(numbers);
+</code></pre>`;
+      } else if (userInput.toLowerCase().includes('что такое массив')) {
+        answerDiv.innerHTML = `Массив - упорядоченная коллекция элементов, которая может содержать различные типы данных.
+<pre><code>let numbers = [1, 2, 3, 4, 5];
+console.log(numbers);</code></pre>`;
+      } else if (userInput.toLowerCase().includes('что такое функция')) {
+        answerDiv.innerHTML = `Функция - это блок кода, который выполняет определенную задачу. Она может принимать аргументы и возвращать значение.
+<pre><code>function sayHello() {
+  return 'Hello, World!';
+} 
+console.log(sayHello());
+</code></pre>`;
+      }else if (userInput.toLowerCase().includes('Что такое веб дизайн')) {
+        answerDiv.innerHTML = `Веб-дизайн, или веб-дизайн, это процесс создания веб-сайтов или веб-приложений. Он включает в себя разработку графического интерфейса и пользовательского опыта. Веб-дизайнеры работают с разметкой HTML, стилями CSS и скриптами JavaScript, чтобы создать внешний вид и функциональность сайтов.
+
+Веб-дизайн может включать в себя такие элементы, как цвета, шрифты, макеты, анимации и интерактивные элементы. Цель веб-дизайна - создать удобный, функциональный и привлекательный интерфейс, который удовлетворяет пользовательским потребностям и улучшает пользовательский опыт.
+
+Веб-дизайнеры также отвечают за оптимизацию сайтов для поисковых систем, чтобы улучшить их видимость в интернете. Они работают с клиентами для определения требований к веб-дизайну и создания проектов, которые соответствуют их бренду и аудитории.`;
+      }  
+      
+      else {
+        answerDiv.textContent = "Извините, я не понимаю ваш вопрос. Пожалуйста, сформулируйте его по-другому.";
+      }
+      responseArea.appendChild(questionDiv);
+      responseArea.appendChild(answerDiv);
+      let copyButton = document.createElement('button');
+      copyButton.className = 'copy-button';
+      copyButton.textContent = 'Copy Code';
+      copyButton.onclick = function() {
+        const code = answerDiv.querySelector('code').innerText;
+        navigator.clipboard.writeText(code);
+        copyButton.textContent = 'Copied';
+      };
+      responseArea.appendChild(copyButton);
+      document.getElementById('userInput').value = '';
+    }
+  }
+  function clearResponses() {
+    document.getElementById('aiResponse').innerHTML = '';
+  }
+</script>
+</body>
+</html>
